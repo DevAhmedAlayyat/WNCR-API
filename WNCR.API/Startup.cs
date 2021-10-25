@@ -28,23 +28,24 @@ namespace WNCR.API
             services.AddControllers();
 
             services.AddAuthentication("Bearer")
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = "http://localhost:5000";
-                    options.RequireHttpsMetadata = false;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateAudience = false
-                    };
-                });
-                //For Resource Token
-                //.AddIdentityServerAuthentication(options =>
+                //.AddJwtBearer(options =>
                 //{
                 //    options.Authority = "http://localhost:5000";
                 //    options.RequireHttpsMetadata = false;
-                //    options.ApiName = "WNCR.API";
-                //    options.ApiSecret = "secret.API";
+                //    options.TokenValidationParameters = new TokenValidationParameters
+                //    {
+                //        ValidateAudience = false
+                //    };
                 //});
+                //For Resource Token
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = "http://localhost:5000";
+                    options.RequireHttpsMetadata = false;
+                    options.ApiName = "WNCR.API";
+                    options.ApiSecret = "secret.API";
+                    options.SupportedTokens = IdentityServer4.AccessTokenValidation.SupportedTokens.Reference;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
